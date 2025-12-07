@@ -1,61 +1,36 @@
 import { useState } from "react";
-import CafeInfo from "../CafeInfo/CafeInfo";
-import Notification from "../Notification/Notification";
-import VoteOptions from "../VoteOptions/VoteOptions";
-import VoteStats from "../VoteStats/VoteStats";
+import type { Votes, VoteType } from "../../types/votes";
+import { VoteOptions } from "../VoteOptions/VoteOptions";
+import { VoteStats } from "../VoteStats/VoteStats";
 
+export default function App() {
+    const [votes, setVotes] = useState<Votes>({
+        good: 0,
+        neutral: 0,
+        bad: 0
+    });
 
-function App() {
-    const [good, setGood] = useState(0);
-    const [neutral, setNeutral] = useState(0);
-    const [bad, setBad] = useState(0);
-
-    const total = good + neutral + bad;
-    const positive = total ? Math.round((good / total) * 100) : 0;
-
-    const handleVote = (option: "good" | "neutral" | "bad") => {
-        switch (option) {
-            case "good":
-                setGood((prev) => prev + 1);
-                break;
-            case "neutral":
-                setNeutral((prev) => prev + 1);
-                break;
-            case "bad":
-                setBad((prev) => prev + 1);
-                break;
-        }
+    const handleVote = (type: VoteType) => {
+        setVotes(prev => ({
+            ...prev,
+            [type]: prev[type] + 1
+        }));
     };
 
-    const handleReset = () => {
-        setGood(0);
-        setNeutral(0);
-        setBad(0);
-    }
+    const totalVotes = votes.good + votes.neutral + votes.bad;
+    const positiveRate = totalVotes > 0 ? Math.round((votes.good / totalVotes) * 100) : 0;
 
     return (
         <div>
-            <CafeInfo />
+            <VoteOptions onLeaveFeedback={handleVote} />
 
-            <VoteOptions
-                onVote={handleVote}
-                onReset={handleReset}
-                canReset={total > 0}
-            />
-
-            {total === 0 ? (
-                <Notification />
-            ) : (
+            {totalVotes > 0 && (
                 <VoteStats
-                    good={good}
-                    neutral={neutral}
-                    bad={bad}
-                    total={total}
-                    positive={positive}
+                    votes={votes}
+                    totalVotes={totalVotes}
+                    positiveRate={positiveRate}
                 />
             )}
         </div>
     );
 }
-
-export default App;
