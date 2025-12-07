@@ -1,15 +1,47 @@
 import type { VoteType } from "../../types/votes";
+import css from "./VoteOptions.module.css";
 
-interface VoteOptionsProps {
-    onLeaveFeedback: (type: VoteType) => void;
+export interface VoteOptionsProps {
+    onVote: (type: VoteType) => void;
+    onReset: () => void;
+    canReset: boolean;
 }
 
-export const VoteOptions: React.FC<VoteOptionsProps> = ({ onLeaveFeedback }) => {
+export const VoteOptions: React.FC<VoteOptionsProps> = ({
+                                                            onVote,
+                                                            onReset,
+                                                            canReset
+                                                        }) => {
     return (
-        <div>
-            <button onClick={() => onLeaveFeedback("good")}>Good</button>
-            <button onClick={() => onLeaveFeedback("neutral")}>Neutral</button>
-            <button onClick={() => onLeaveFeedback("bad")}>Bad</button>
+        <div className={css.container}>
+            <button
+                className={css.button}
+                onClick={() => onVote("good")}
+            >
+                Good
+            </button>
+
+            <button
+                className={css.button}
+                onClick={() => onVote("neutral")}
+            >
+                Neutral
+            </button>
+
+            <button
+                className={css.button}
+                onClick={() => onVote("bad")}
+            >
+                Bad
+            </button>
+
+            <button
+                className={`${css.button} ${css.reset}`}
+                onClick={onReset}
+                disabled={!canReset}
+            >
+                Reset
+            </button>
         </div>
     );
 };
