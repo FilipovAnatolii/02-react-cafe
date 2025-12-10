@@ -33,7 +33,7 @@
     border-color: #b02a37;
   }
   .disabled {
-    opacity: 0.5;  /* Полупрозрачность для неактивного вида */
-    cursor: not-allowed;  /* Курсор "запрещено" */
-    background-color: #ccc;  /* Серый фон (пример, подстройте под ваш дизайн) */
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #ccc;
   }
