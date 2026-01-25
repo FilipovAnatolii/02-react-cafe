@@ -2,10 +2,7 @@ import css from "./VoteOptions.module.css";
 import type { VoteOptionsProps } from "../../types/votes";
 import clsx from "clsx";
 
-
-
-export const VoteOptions = ({ onVote, onReset, canReset}: VoteOptionsProps) => {
-
+export const VoteOptions = ({ onVote, onReset, canReset }: VoteOptionsProps) => {
     return (
         <div className={css.container}>
             <button className={css.button} onClick={() => onVote("good")}>
@@ -18,14 +15,14 @@ export const VoteOptions = ({ onVote, onReset, canReset}: VoteOptionsProps) => {
                 Bad
             </button>
 
-            <button
-                className={clsx(css.button, css.reset, { [css.disabled]: !canReset })}
-                onClick={onReset}
-                disabled={!canReset}
-            >
-                Reset
-            </button>
-
+            {canReset && (
+                <button
+                    className={clsx(css.button, css.reset)}
+                    onClick={onReset}
+                >
+                    Reset
+                </button>
+            )}
         </div>
     );
 };
