@@ -15,6 +15,7 @@ export const VoteOptions = ({ onVote, onReset, canReset }: VoteOptionsProps) => 
                 Bad
             </button>
 
+
             {canReset && (
                 <button
                     className={clsx(css.button, css.reset)}
